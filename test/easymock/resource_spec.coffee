@@ -30,7 +30,7 @@ describe "easymock-resource", ->
 
     describe "defaultOptions", ->
       it "should not have property", ->
-        expect(Resource.defaultOptions).to.be.eql({})
+        expect(Resource.defaultOptions).to.have.property("configFile", "easymock-resource.config.json")
 
     describe "initialize", ->
       ensureOptions = null
@@ -56,6 +56,7 @@ describe "easymock-resource", ->
         instance = new Resource(options)
       it "should extend defaultOptions", ->
         expect(instance.options).to.be.eql options
+
     describe "execute", ->
       instance = null
       options  = null
@@ -86,30 +87,65 @@ describe "easymock-resource", ->
         expect(resourceProcess.calledOnce).to.be.ok()
 
     describe "loadConfig", ->
-      options  = null
-      instance = null
-      beforeEach ->
-        options = { configFile: "test/fixture/config.cson" }
-        instance = new Resource(options)
+      describe "configFile", ->
+        options  = null
+        instance = null
+        beforeEach ->
+          options = { configFile: "test/fixture/config.cson" }
+          instance = new Resource(options)
 
-      promise = null
-      beforeEach ->
-        promise = instance.loadConfig(instance.options.configFile)
+        promise = null
+        beforeEach ->
+          promise = instance.loadConfig(instance.options.configFile)
 
-      it "should return promise object", ->
-        expect(Q.isPromise promise).to.be.ok()
-      it "should have property dest", (done) ->
-        promise.then ->
-          expect(instance.config).to.have.property("dest", "test/.temp/")
-          done()
-      it "should have property variations", (done) ->
-        promise.then ->
-          expect(instance.config).to.have.property("variations")
-          expect(instance.config.variations).to.be.eql {
-            default:    [ "api/*.default.json"    ]
-            not_exists: [ "api/*.not_exists.json" ]
-          }
-          done()
+        it "should return promise object", ->
+          expect(Q.isPromise promise).to.be.ok()
+        it "should have property dest", (done) ->
+          promise.then ->
+            expect(instance.config).to.have.property("dest", "test/.temp/")
+            done()
+        it "should have property variations", (done) ->
+          promise.then ->
+            expect(instance.config).to.have.property("variations")
+            expect(instance.config.variations).to.be.eql {
+              default:    [ "api/*.default.json"    ]
+              not_exists: [ "api/*.not_exists.json" ]
+            }
+            done()
+
+      describe "config", ->
+        options  = null
+        instance = null
+        beforeEach ->
+          options =
+            config:
+              cwd:  "test/fixture/"
+              dest: "test/.temp/"
+              variations:
+                default:    "api/*.default.json"
+                not_exists: "api/*.not_exists.json"
+
+          instance = new Resource(options)
+
+        promise = null
+        beforeEach ->
+          promise = instance.loadConfig(instance.options.config)
+          null
+
+        it "should return promise object", ->
+          expect(Q.isPromise promise).to.be.ok()
+        it "should have property dest", (done) ->
+          promise.then ->
+            expect(instance.config).to.have.property("dest", "test/.temp/")
+            done()
+        it "should have property variations", (done) ->
+          promise.then ->
+            expect(instance.config).to.have.property("variations")
+            expect(instance.config.variations).to.be.eql {
+              default:    "api/*.default.json"
+              not_exists: "api/*.not_exists.json"
+            }
+            done()
 
     describe "readVariations", ->
       options  = null

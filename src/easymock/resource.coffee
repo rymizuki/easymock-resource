@@ -19,7 +19,8 @@ loadFile = (filepath, ext) ->
       throw new Error("Unsupported extension '#{ ext }'")
 
 class Resource
-  @defaultOptions: {}
+  @defaultOptions:
+    configFile: "easymock-resource.config.json"
 
   constructor: (options={}) ->
     @ensureOptions(options)
@@ -28,14 +29,15 @@ class Resource
     @options = _.defaults options, Resource.defaultOptions
 
   execute: (variation="default") ->
-    @loadConfig(@options.configFile)
+    @loadConfig(if @options.config then @options.config else @options.configFile)
       .then         => @readVariations(variation)
       .then (files) => @resourceProcess(files)
       .fail (err) => console.log(err)
 
-  loadConfig: (filepath) ->
+  loadConfig: (config) ->
+    self = @
     Q.fcall =>
-      @config = loadFile(filepath)
+      self.config = if _.isString(config) then loadFile(config) else config
 
   readVariations: (variation) ->
     deferred = Q.defer()
