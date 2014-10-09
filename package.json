@@ -14,16 +14,14 @@
     "file-utils": "^0.2.1",
     "optimist": "^0.6.1",
     "q": "^1.0.1",
-    "rimraf": "^2.2.8",
-    "through2": "^0.6.2",
-    "vinyl-fs": "^0.3.8"
+    "rimraf": "^2.2.8"
   },
   "devDependencies": {
     "coffee-script": "^1.8.0",
     "expect.js": "^0.3.1",
-    "gulp": "^3.8.8",
-    "gulp-coffeelint": "^0.4.0",
-    "gulp-mocha": "^1.1.0",
+    "gulp": "~3.8.8",
+    "gulp-coffeelint": "~0.4.0",
+    "gulp-mocha": "~1.1.1",
     "sinon": "^1.10.3"
   }
 }
