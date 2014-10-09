@@ -15,7 +15,6 @@ var argv = optimist
   .options("c", {
     alias: "config",
     describe: "Set config file path.",
-    default: "./mock-config.cson"
   })
   .options("v", {
     alias: "variation",
@@ -28,12 +27,11 @@ if (argv.h) {
   return optimist.showHelp();
 }
 
-var server = new easymock.MockServer({port: argv.port});
-
 resource.init({
   configFile: argv.config,
   variation:  argv.variation
-}).then(function () {
-  server.start();
+}).then(function (easymockArgs) {
+  easymockArgs.port = argv.port;
+  new easymock.MockServer(easymockArgs).start();
 });
 

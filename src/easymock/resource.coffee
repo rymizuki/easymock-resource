@@ -14,7 +14,7 @@ loadFile = (filepath, ext) ->
     throw new Error("File not exists '#{ filepath }'.")
   switch ext
     when ".cson" then CSON.parseFileSync(filepath)
-    when ".json" then JSON.parse(futil.readFile filepath)
+    when ".json" then JSON.parse(futil.read filepath)
     else
       throw new Error("Unsupported extension '#{ ext }'")
 
@@ -32,6 +32,7 @@ class Resource
     @loadConfig(if @options.config then @options.config else @options.configFile)
       .then         => @readVariations(variation)
       .then (files) => @resourceProcess(files)
+      .then         => @formatArgs()
       .fail (err) => console.log(err)
 
   loadConfig: (config) ->
@@ -63,6 +64,21 @@ class Resource
       futil.mkdir(path.dirname dest)
       file.src.forEach (source) ->
         futil.copy(source, dest)
+
+  formatArgs: ->
+    self = @
+    Q.fcall ->
+      config = self.config
+      dest = config.dest
+
+      delete config.cwd
+      delete config.dest
+      delete config.variations
+
+      return {
+        path:   dest
+        config: config
+      }
 
 resource = module.exports = {}
 

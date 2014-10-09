@@ -67,14 +67,17 @@ describe "easymock-resource", ->
       loadConfig      = null
       readVariations  = null
       resourceProcess = null
+      formatArgs      = null
       beforeEach ->
         loadConfig      = sinon.spy instance, "loadConfig"
         readVariations  = sinon.spy instance, "readVariations"
         resourceProcess = sinon.spy instance, "resourceProcess"
+        formatArgs      = sinon.spy instance, "formatArgs"
       afterEach ->
         loadConfig.restore()
         readVariations.restore()
         resourceProcess.restore()
+        formatArgs.restore()
 
       beforeEach ->
         instance.execute()
@@ -85,6 +88,8 @@ describe "easymock-resource", ->
         expect(readVariations.calledOnce).to.be.ok()
       it "should call resourceProcess", ->
         expect(resourceProcess.calledOnce).to.be.ok()
+      it "should call formatArgs", ->
+        expect(formatArgs.calledOnce).to.be.ok()
 
     describe "loadConfig", ->
       describe "configFile", ->
@@ -233,3 +238,34 @@ describe "easymock-resource", ->
         expect(rimraf.callCount).to.be files.length
       it "should be call mkdir", ->
         expect(mkdir.callCount).to.be files.length
+
+    describe "formatArgs", ->
+      options  = null
+      instance = null
+      beforeEach ->
+        options =
+          config:
+            dest: "test/.temp"
+            routes: [
+              "/api/user/:id"
+            ]
+            variables:
+              server: "http://localhost:8080/"
+        instance = new Resource(options)
+        instance.loadConfig(options.config)
+
+      it "should be return promise", ->
+        expect(Q.isPromise instance.formatArgs()).to.be.ok()
+      it "should be resolve config has path", (done) ->
+        instance.formatArgs().then (args) ->
+          expect(args).to.have.property('path', options.config.dest)
+          done()
+      it "should be resolve config has config", (done) ->
+        instance.formatArgs().then (args) ->
+          expect(args).to.have.property('config')
+          expect(args.config).to.be.eql {
+            routes:    options.config.routes
+            variables: options.config.variables
+          }
+          done()
+
