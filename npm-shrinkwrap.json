@@ -582,6 +582,80 @@
       "version": "2.2.8",
       "from": "rimraf@^2.2.8"
     },
+    "lodash": {
+      "version": "2.4.1",
+      "from": "lodash@"
+    },
+    "cson": {
+      "version": "1.6.1",
+      "from": "cson@",
+      "dependencies": {
+        "ambi": {
+          "version": "2.2.0",
+          "from": "ambi@^2.2.0",
+          "resolved": "https://registry.npmjs.org/ambi/-/ambi-2.2.0.tgz",
+          "dependencies": {
+            "typechecker": {
+              "version": "2.0.8",
+              "from": "typechecker@~2.0.7",
+              "resolved": "https://registry.npmjs.org/typechecker/-/typechecker-2.0.8.tgz"
+            }
+          }
+        },
+        "coffee-script": {
+          "version": "1.7.1",
+          "from": "coffee-script@~1.7.1",
+          "dependencies": {
+            "mkdirp": {
+              "version": "0.3.5",
+              "from": "mkdirp@~0.3.5"
+            }
+          }
+        },
+        "extract-opts": {
+          "version": "2.2.0",
+          "from": "extract-opts@~2.2.0",
+          "resolved": "https://registry.npmjs.org/extract-opts/-/extract-opts-2.2.0.tgz",
+          "dependencies": {
+            "typechecker": {
+              "version": "2.0.8",
+              "from": "typechecker@~2.0.7",
+              "resolved": "https://registry.npmjs.org/typechecker/-/typechecker-2.0.8.tgz"
+            }
+          }
+        },
+        "js2coffee": {
+          "version": "0.3.3",
+          "from": "js2coffee@~0.3.1",
+          "dependencies": {
+            "file": {
+              "version": "0.2.2",
+              "from": "file@~0.2.1"
+            },
+            "nopt": {
+              "version": "3.0.1",
+              "from": "nopt@~3.0.1",
+              "resolved": "https://registry.npmjs.org/nopt/-/nopt-3.0.1.tgz",
+              "dependencies": {
+                "abbrev": {
+                  "version": "1.0.5",
+                  "from": "abbrev@1"
+                }
+              }
+            },
+            "underscore": {
+              "version": "1.6.0",
+              "from": "underscore@~1.6.0"
+            }
+          }
+        },
+        "requirefresh": {
+          "version": "1.1.2",
+          "from": "requirefresh@~1.1.2",
+          "resolved": "https://registry.npmjs.org/requirefresh/-/requirefresh-1.1.2.tgz"
+        }
+      }
+    },
     "expect.js": {
       "version": "0.3.1",
       "from": "expect.js@^0.3.1",

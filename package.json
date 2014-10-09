@@ -1,12 +1,12 @@
 {
   "name": "easymock-resource",
   "version": "0.0.0",
-  "description": "",
+  "description": "UI variation management extension for node-easymock",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp test"
   },
-  "author": "",
+  "author": "mizuki_r <ry.mizuki@gamil.com>",
   "license": "MIT",
   "dependencies": {
     "coffee-script": "^1.8.0",
@@ -14,7 +14,9 @@
     "file-utils": "^0.2.1",
     "optimist": "^0.6.1",
     "q": "^1.0.1",
-    "rimraf": "^2.2.8"
+    "rimraf": "^2.2.8",
+    "lodash": "~2.4.1",
+    "cson": "~1.6.1"
   },
   "devDependencies": {
     "coffee-script": "^1.8.0",
@@ -23,5 +25,19 @@
     "gulp-coffeelint": "~0.4.0",
     "gulp-mocha": "~1.1.1",
     "sinon": "^1.10.3"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rymizuki/easymock-resource.git"
+  },
+  "keywords": [
+    "easymock"
+  ],
+  "bugs": {
+    "url": "https://github.com/rymizuki/easymock-resource/issues"
+  },
+  "homepage": "https://github.com/rymizuki/easymock-resource"
 }
