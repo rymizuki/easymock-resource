@@ -1,0 +1,11 @@
+{
+  cwd:  "test/fixture/"
+  dest: "test/.temp/"
+  variations:
+    default: [
+      "api/*.default.json"
+    ]
+    not_exists: [
+      "api/*.not_exists.json"
+    ]
+}

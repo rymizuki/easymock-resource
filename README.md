@@ -1,0 +1,3 @@
+# easymock-resource
+
+

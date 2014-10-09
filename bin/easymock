@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+"use strict";
+var optimist = require("optimist");
+var easymock = require("easymock");
+var resource = require("../index");
+
+var argv = optimist
+  .usage("Usage: $0 -p [port] -v [vartion name] -c [config path]")
+  .boolean("h")
+  .options("p", {
+    alias:    "port",
+    describe: "Set port.",
+    default:  3000
+  })
+  .options("c", {
+    alias: "config",
+    describe: "Set config file path.",
+    default: "./mock-config.cson"
+  })
+  .options("v", {
+    alias: "variation",
+    describe: "Choise resource variation.",
+    default: 'default'
+  })
+  .argv;
+
+if (argv.h) {
+  return optimist.showHelp();
+}
+
+var server = new easymock.MockServer({port: argv.port});
+
+resource.init({
+  configFile: argv.config,
+  variation:  argv.variation
+}).then(function () {
+  server.start();
+});
+
